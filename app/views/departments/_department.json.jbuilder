@@ -1,2 +1,3 @@
-json.extract! department, :id, :created_at, :updated_at
-json.url department_url(department, format: :json)
+json.name department.name
+json.manager department.manager
+json.code department.code
