@@ -17,7 +17,11 @@ class EmployeesController < ApplicationController
             title: params[:title],
             department_id: params[:department_id]
         )
-        render :show
+        if @employee.valid?
+            render :show
+        else
+            render json: {errors: @employee.errors.full_messages}, status: 422
+        end
     end
 
     def update
@@ -30,12 +34,16 @@ class EmployeesController < ApplicationController
             title: params[:title] || @employee.title,
             department_id: params[:department_id] || @employee.department_id
         )
-        render :show
+        if @employee.valid?
+            render :show
+        else
+            render json: {errors: @employee.errors.full_messages}, status: 422
+        end
     end
 
     def destroy
         @employee = Employee.find_by(id: params[:id])
-        @employee.delete
+        @employee.destroy
         render json: {message: "Successfully deleted"}
     end
 end
